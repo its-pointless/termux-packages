@@ -1,0 +1,5 @@
+TERMUX_PKG_HOMEPAGE=https://www.x.org
+TERMUX_PKG_VERSION=0.4.0
+TERMUX_PKG_SRCURL=https://www.x.org/archive/individual/xcb/xcb-util-$TERMUX_PKG_VERSION.tar.bz2
+TERMUX_PKG_DEPENDS="libxcb"
+TERMUX_PKG_SHA256=46e49469cb3b594af1d33176cd7565def2be3fa8be4371d62271fabb5eae50e9
