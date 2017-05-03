@@ -48,12 +48,16 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 --disable-secure-rpc
 --enable-input-thread
 --enable-xtrans-send-fds
---enable-xorg
+--disable-xorg
 --enable-xvfb
 --disable-dmx
 --enable-ipv6
 --enable-tcp-transport
 --enable-unix-transport
 "
-TERMUX_PKG_DEPENDS="libx11, libxfont2, libxkbfile, libxau, libxdmcp"
+TERMUX_PKG_DEPENDS="libx11, libxfont2, libxkbfile, libxau, libxdmcp, apr"
+
+termux_step_pre_configure () {
+	CPPFLAGS="$CPPFLAGS -I$TERMUX_PREFIX/apr-1"
+}
 
