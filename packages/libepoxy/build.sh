@@ -3,3 +3,8 @@ TERMUX_PKG_SRCURL=https://github.com/anholt/libepoxy/releases/download/v${TERMUX
 TERMUX_PKG_SHA256=25a906b14a921bc2b488cfeaa21a00486fe92630e4a9dd346e4ecabeae52ab41
 TERMUX_PKG_DESCRIPTION="Library handling OpenGL function pointer management"
 TERMUX_PKG_EXTRA_CONFIGURE_ARGS="--disable-glx"
+
+termux_step_pre_configure () {
+	export EGL_CFLAGS=$CFLAGS
+	export EGL_LIBS="-L$TERMUX_STANDALONE_TOOLCHAIN/sysroot/lib -lEGL"
+}
