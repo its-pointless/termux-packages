@@ -1,3 +1,4 @@
+TERMUX_PKG_HOMEPAGE=https://www.x.org
 TERMUX_PKG_VERSION=1.12
 TERMUX_PKG_SRCURL=https://www.x.org/archive//individual/xcb/xcb-proto-$TERMUX_PKG_VERSION.tar.bz2
 TERMUX_PKG_SHA256=5922aba4c664ab7899a29d92ea91a87aa4c1fc7eb5ee550325c3216c480a4906
