@@ -1,0 +1,11 @@
+--- ./common/os/Thread.cxx	2017-01-18 18:09:28.000000000 +0530
++++ ../Thread.cxx	2017-05-03 13:51:32.803051270 +0530
+@@ -48,7 +48,7 @@
+   delete (HANDLE*)threadId;
+ #else
+   if (isRunning())
+-    pthread_cancel(*(pthread_t*)threadId);
++    pthread_kill(*(pthread_t*)threadId, SIGABRT);
+   delete (pthread_t*)threadId;
+ #endif
+ 

@@ -1,0 +1,11 @@
+--- ./common/os/CMakeLists.txt	2017-01-18 18:09:28.000000000 +0530
++++ ./common/os/CMakeLists.txt	2017-05-03 14:01:04.418351867 +0530
+@@ -6,7 +6,7 @@
+   w32tiger.c
+   os.cxx)
+ 
+-if(UNIX)
++if(UNIX AND NOT ${CMAKE_SYSTEM_NAME} MATCHES "Android")
+   target_link_libraries(os pthread)
+ endif()
+ 

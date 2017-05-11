@@ -1,0 +1,15 @@
+--- ./unix/xserver119.patch	2017-04-19 18:57:31.000000000 +0530
++++ ../xserver119.patch	2017-05-08 10:50:49.737408009 +0530
+@@ -61,10 +61,11 @@
+ diff -up xserver/mi/miinitext.c.xserver116-rebased xserver/mi/miinitext.c
+ --- xserver/mi/miinitext.c.xserver116-rebased	2016-09-29 13:14:45.618441855 +0200
+ +++ xserver/mi/miinitext.c	2016-09-29 13:14:45.631442006 +0200
+-@@ -114,6 +114,10 @@ SOFTWARE.
++@@ -114,6 +114,11 @@ SOFTWARE.
+  #include "micmap.h"
+  #include "globals.h"
+  
+++#include "hw/xfree86/common/xf86Module.h"
+ +#ifdef TIGERVNC
+ +extern void vncExtensionInit(INITARGS);
+ +#endif

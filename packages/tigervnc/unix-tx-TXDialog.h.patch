@@ -1,0 +1,13 @@
+--- ./unix/tx/TXDialog.h	2017-01-18 18:09:28.000000000 +0530
++++ ../TXDialog.h	2017-05-03 13:56:45.950509558 +0530
+@@ -36,6 +36,10 @@
+ #include <sys/proto.h>
+ #endif
+ 
++#ifdef __ANDROID__
++#include <sys/select.h>
++#endif
++
+ class TXDialog : public TXWindow, public TXDeleteWindowCallback {
+ public:
+   TXDialog(Display* dpy, int width, int height, const char* name,
