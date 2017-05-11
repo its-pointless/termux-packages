@@ -1,0 +1,20 @@
+--- ./os/utils.c	2017-05-08 11:04:30.403644103 +0530
++++ ../utils.c	2017-05-08 23:32:41.869049921 +0530
+@@ -239,7 +239,7 @@
+  * server at a time.  This keeps the servers from stomping on each other
+  * if the user forgets to give them different display numbers.
+  */
+-#define LOCK_DIR "/tmp"
++#define LOCK_DIR "@TERMUX_PREFIX@/tmp"
+ #define LOCK_TMP_PREFIX "/.tX"
+ #define LOCK_PREFIX "/.X"
+ #define LOCK_SUFFIX "-lock"
+@@ -1478,7 +1478,7 @@
+             }
+             close(pdes[1]);
+         }
+-        execl("/bin/sh", "sh", "-c", command, (char *) NULL);
++        execl("@TERMUX_PREFIX@/bin/sh", "sh", "-c", command, (char *) NULL);
+         _exit(127);
+     }
+ 

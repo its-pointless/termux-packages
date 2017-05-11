@@ -12,7 +12,7 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 --disable-xvmc
 --disable-screensaver
 --enable-present
---enable-xinerama
+--disable-xinerama
 --disable-xace
 --disable-dbe
 --disable-dpms
@@ -22,7 +22,6 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 --disable-int10-module
 --disable-pciaccess
 --disable-dri
---disable-kdrive-kbd
 --disable-input-thread
 --disable-glamor
 --disable-xf86vidmode
@@ -36,14 +35,16 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 --disable-listen-linux
 --disable-visibility
 --disable-xnest
---enable-xquartz
+--disable-xquartz
 --disable-xwin
 --disable-xwayland
 --disable-standalone-xpbproxy
 --disable-kdrive
+--disable-kdrive-evdev
+--disable-kdrive-kbd
 --disable-xephyr
---enable-xfake
---enable-xfbdev
+--disable-xfake
+--disable-xfbdev
 --disable-local-transport
 --disable-secure-rpc
 --enable-input-thread
@@ -54,10 +55,23 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 --enable-ipv6
 --enable-tcp-transport
 --enable-unix-transport
+--with-fontrootdir=$TERMUX_PREFIX/share/fonts
+--with-xkb-path=$TERMUX_PREFIX/share/X11/xkb
 "
-TERMUX_PKG_DEPENDS="libx11, libxfont2, libxkbfile, libxau, libxdmcp, apr"
+TERMUX_PKG_DEPENDS="libx11, libxfont2, libxkbfile, libxau, libxdmcp"
 
 termux_step_pre_configure () {
-	CPPFLAGS="$CPPFLAGS -I$TERMUX_PREFIX/apr-1"
+	CFLAGS="$CFLAGS -DFNDELAY=O_NDELAY"
+	if [ -n "$TERMUX_DEBUG" ]; then
+		TERMUX_PKG_EXTRA_CONFIGURE_ARGS+=" --enable-debug"
+	fi
 }
 
+termux_step_post_make_install () {
+	rm -f "${TERMUX_PREFIX}/usr/share/X11/xkb/compiled"
+}
+
+if [ "$#" -eq 1 ] && [ "$1" == "xorg_server_flags" ]; then
+        echo $TERMUX_PKG_EXTRA_CONFIGURE_ARGS
+        return 
+fi
