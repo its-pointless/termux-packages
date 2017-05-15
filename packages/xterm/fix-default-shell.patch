@@ -1,0 +1,33 @@
+--- ./main.c	2017-05-12 23:22:20.556735976 +0530
++++ ../main.c	2017-05-12 23:31:20.780078175 +0530
+@@ -3428,7 +3428,7 @@
+ static char *
+ resetShell(char *oldPath)
+ {
+-    char *newPath = x_strdup("/bin/sh");
++    char *newPath = x_strdup("@TERMUX_PREFIX@/bin/bash");
+     char *envPath = getenv("SHELL");
+     if (oldPath != 0)
+ 	free(oldPath);
+--- ./misc.c	2016-10-07 06:11:14.000000000 +0530
++++ ../misc.c	2017-05-12 23:34:39.191282106 +0530
+@@ -2083,7 +2083,7 @@
+ 	}
+ 
+ 	if (shell == 0) {
+-	    static char dummy[] = "/bin/sh";
++	    static char dummy[] = "@TERMUX_PREFIX@/bin/bash";
+ 	    shell = dummy;
+ 	}
+ 
+--- ./resize.c	2015-04-10 14:30:41.000000000 +0530
++++ ../resize.c	2017-05-12 23:35:27.561575032 +0530
+@@ -375,7 +375,7 @@
+ 	    if (!OkPasswd(&pw)
+ 		|| *(ptr = pw.pw_shell) == 0) {
+ 		/* this is the same default that xterm uses */
+-		ptr = x_strdup("/bin/sh");
++		ptr = x_strdup("@TERMUX_PREFIX@/bin/bash");
+ 	    }
+ 	}
+ 

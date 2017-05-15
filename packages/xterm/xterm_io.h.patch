@@ -1,0 +1,11 @@
+--- ./xterm_io.h	2014-07-25 13:56:56.000000000 +0530
++++ ../xterm_io.h	2017-05-12 23:21:43.653165611 +0530
+@@ -211,7 +211,7 @@
+ #undef TIOCLSET			/* defined, but not useable */
+ #endif
+ 
+-#if defined(__GNU__) || defined(__MVS__) || defined(__osf__)
++#if defined(__GNU__) || defined(__MVS__) || defined(__osf__) || defined(__ANDROID__)
+ #undef TIOCLSET
+ #undef TIOCSLTC
+ #endif

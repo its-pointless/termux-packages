@@ -1,0 +1,18 @@
+--- ./main.c	2017-05-12 11:15:36.943638207 +0530
++++ ../main.c	2017-05-12 11:22:34.625260941 +0530
+@@ -3240,6 +3240,7 @@
+ static void
+ set_owner(char *device, unsigned uid, unsigned gid, unsigned mode)
+ {
++#ifndef __ANDROID__
+     int why;
+ 
+     TRACE_IDS;
+@@ -3272,6 +3273,7 @@
+ 	}
+ 	TRACE(("...chmod failed: %s\n", strerror(why)));
+     }
++#endif
+ }
+ 
+ /*
