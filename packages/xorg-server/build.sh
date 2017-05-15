@@ -55,10 +55,11 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 --enable-ipv6
 --enable-tcp-transport
 --enable-unix-transport
+--with-sha1=libcrypto
 --with-fontrootdir=$TERMUX_PREFIX/share/fonts
 --with-xkb-path=$TERMUX_PREFIX/share/X11/xkb
 "
-TERMUX_PKG_DEPENDS="libx11, libxfont2, libxkbfile, libxau, libxdmcp"
+TERMUX_PKG_DEPENDS="libx11, libxfont2, libxkbfile, libxau, libpixman, openssl"
 
 termux_step_pre_configure () {
 	CFLAGS="$CFLAGS -DFNDELAY=O_NDELAY"
