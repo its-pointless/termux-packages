@@ -3,7 +3,7 @@ TERMUX_PKG_SRCURL=https://www.x.org/archive//individual/xserver/xorg-server-$TER
 TERMUX_PKG_SHA256=79ae2cf39d3f6c4a91201d8dad549d1d774b3420073c5a70d390040aa965a7fb
 TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 --disable-libdrm
---disable-glx
+--enable-glx
 --disable-mitshm
 --enable-composite
 --enable-xres
@@ -22,6 +22,8 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 --disable-int10-module
 --disable-pciaccess
 --disable-dri
+--disable-dri2
+--disable-dri3
 --disable-input-thread
 --disable-glamor
 --disable-xf86vidmode
@@ -55,6 +57,7 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 --enable-ipv6
 --enable-tcp-transport
 --enable-unix-transport
+--disable-libunwind
 --with-sha1=libcrypto
 --with-fontrootdir=$TERMUX_PREFIX/share/fonts
 --with-xkb-path=$TERMUX_PREFIX/share/X11/xkb
