@@ -1,9 +1,9 @@
 TERMUX_PKG_HOMEPAGE="http://www.tigervnc.org"
-TERMUX_PKG_VERSION=1.7.90
+TERMUX_PKG_VERSION=1.8.0
 TERMUX_PKG_DESCRIPTION="Suite of VNC servers. Based on the VNC 4 branch of TightVNC."
 TERMUX_PKG_DEPENDS="libgnutls, libjpeg-turbo, libxfont2, libpixman, libgcrypt, perl, xtrans, x11-proto, libx11, xorg-xauth, libandroid-shmem, gettext, xorg-server"
 TERMUX_PKG_SRCURL=https://github.com/TigerVNC/tigervnc/archive/v${TERMUX_PKG_VERSION}.tar.gz
-TERMUX_PKG_SHA256=0ddc43366b8399f591a24b35163a973bad129a1a7c1fcea7295fbfd8870c0a5f
+TERMUX_PKG_SHA256=9951dab0e10f8de03996ec94bec0d938da9f36d48dca8c954e8bbc95c16338f8
 TERMUX_PKG_FOLDERNAME=tigervnc-$TERMUX_PKG_VERSION
 TERMUX_PKG_EXTRA_CONFIGURE_ARGS="-DBUILD_VIEWER=OFF -DENABLE_NLS=OFF -DENABLE_PAM=OFF -DENABLE_GNUTLS=OFF"
 TERMUX_PKG_BUILD_IN_SRC=true
