@@ -6,7 +6,7 @@ TERMUX_PKG_BUILD_IN_SRC=true
 
 termux_step_post_extract_package () {
 	# not required: dmxproto
-	export _PROTOS=(xproto-7.0.31 xextproto-7.3.0 xcmiscproto-1.2.2 randrproto-1.5.0 renderproto-0.11.1 bigreqsproto-1.1.2 compositeproto-0.4.2 fixesproto-5.0 fontsproto-2.1.3 damageproto-1.2.1 glproto-1.4.17 inputproto-2.3.2 kbproto-1.0.7 resourceproto-1.2.0 dmxproto-2.3.1 presentproto-1.1 recordproto-1.14.2 xineramaproto-1.2.1)
+	export _PROTOS=(xproto-7.0.31 xextproto-7.3.0 xcmiscproto-1.2.2 randrproto-1.5.0 renderproto-0.11.1 bigreqsproto-1.1.2 compositeproto-0.4.2 fixesproto-5.0 fontsproto-2.1.3 damageproto-1.2.1 glproto-1.4.17 inputproto-2.3.2 kbproto-1.0.7 resourceproto-1.2.0 dmxproto-2.3.1 presentproto-1.1 recordproto-1.14.2 xineramaproto-1.2.1 dri2proto-2.8)
 
 	cd $TERMUX_PKG_SRCDIR
 	for index in "${!_PROTOS[@]}"; do
