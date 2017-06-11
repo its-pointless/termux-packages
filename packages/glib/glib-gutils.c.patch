@@ -1,0 +1,11 @@
+--- ./glib/gutils.c	2016-10-22 10:51:26.000000000 +0530
++++ ../gutils.c	2017-06-10 14:57:33.808327882 +0530
+@@ -1959,7 +1959,7 @@
+       gchar *data_dirs = (gchar *) g_getenv ("XDG_DATA_DIRS");
+ 
+       if (!data_dirs || !data_dirs[0])
+-          data_dirs = "/usr/local/share/:/usr/share/";
++          data_dirs = "@TERMUX_PREFIX@/share/";
+ 
+       data_dir_vector = g_strsplit (data_dirs, G_SEARCHPATH_SEPARATOR_S, 0);
+ #endif
