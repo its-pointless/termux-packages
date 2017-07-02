@@ -1,11 +1,13 @@
---- ./xterm_io.h	2014-07-25 13:56:56.000000000 +0530
-+++ ../xterm_io.h	2017-05-12 23:21:43.653165611 +0530
-@@ -211,7 +211,7 @@
- #undef TIOCLSET			/* defined, but not useable */
+--- ./xterm_io.h	2017-05-19 02:45:14.000000000 +0530
++++ ../xterm_io.h	2017-07-02 22:46:37.314098829 +0530
+@@ -202,9 +202,8 @@
+ #undef FIONCLEX
+ #endif /* macII */
+ 
+-#if defined(__QNX__) || defined(__GNU__) || defined(__MVS__) || defined(__osf__)
++#if defined(__QNX__) || defined(__GNU__) || defined(__MVS__) || defined(__osf__) || defined(__ANDROID__)
+ #undef TIOCSLTC			/* <sgtty.h> conflicts with <termios.h> */
+-#undef TIOCSLTC
  #endif
  
--#if defined(__GNU__) || defined(__MVS__) || defined(__osf__)
-+#if defined(__GNU__) || defined(__MVS__) || defined(__osf__) || defined(__ANDROID__)
- #undef TIOCLSET
- #undef TIOCSLTC
- #endif
+ #if defined (__sgi) || (defined(__linux__) && defined(__sparc__)) || defined(__UNIXWARE__)
