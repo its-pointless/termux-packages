@@ -1,7 +1,7 @@
 TERMUX_PKG_HOMEPAGE=https://www.mesa3d.org
-TERMUX_PKG_VERSION=17.1.2
+TERMUX_PKG_VERSION=17.1.4
 TERMUX_PKG_SRCURL=https://mesa.freedesktop.org/archive/mesa-$TERMUX_PKG_VERSION.tar.xz
-TERMUX_PKG_SHA256=0937804f43746339b1f9540d8f9c8b4a1bb3d3eec0e4020eac283b8799798239
+TERMUX_PKG_SHA256=06f3b0e6a28f0d20b7f3391cf67fe89ae98ecd0a686cd545da76557b6cec9cad
 TERMUX_PKG_DEPENDS="libxml2, libx11, x11-proto, libdrm, libxdamage, libxshmfence, libandroid-shmem"
 TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 --disable-gles1
