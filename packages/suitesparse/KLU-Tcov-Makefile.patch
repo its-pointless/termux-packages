@@ -1,0 +1,13 @@
+--- ../cache/SuiteSparse/KLU/Tcov/Makefile	2016-01-28 21:04:56.000000000 +0000
++++ ./KLU/Tcov/Makefile	2017-10-31 05:20:56.508725193 +0000
+@@ -26,8 +26,8 @@
+ 
+ LDLIBS = -L../../lib -lamd -lcolamd -lcholmod -lcamd -lccolamd \
+     -lmetis -lsuitesparseconfig \
+-    $(LAPACK) $(BLAS) $(CUDART_LIB) $(CUBLAS_LIB) -lm -lrt \
+-    -Wl,-rpath=$(SUITESPARSE)/lib -lstdc++
++    $(LAPACK) $(BLAS) $(CUDART_LIB) $(CUBLAS_LIB) -lm  \
++    -Wl,-rpath=$(SUITESPARSE)/lib -lc++_shared
+ 
+ I = -I../../include -I../Include -I../User -I../../BTF/Include
+ 

@@ -1,0 +1,9 @@
+--- ../cache/qrupdate-1.1.2/Makeconf.g95	2010-02-11 09:04:41.000000000 +0000
++++ ./Makeconf.g95	2017-12-28 02:29:45.702303473 +0000
+@@ -1,5 +1,5 @@
+ # set this to your compiler's executable name (e.g. gfortran, g77)
+-FC=g95
++#FC=g95
+ # requested flags
+ FFLAGS=-O3 -funroll-loops
+ # set if you need shared library

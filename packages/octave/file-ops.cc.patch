@@ -1,0 +1,25 @@
+--- ../cache/octave-4.2.1/liboctave/system/file-ops.cc	2017-02-22 18:01:55.000000000 +0000
++++ ./liboctave/system/file-ops.cc	2017-11-01 02:39:01.732844004 +0000
+@@ -253,7 +253,7 @@
+ 
+       // No preexpansion hook, or the preexpansion hook failed.  Look in the
+       // password database.
+-
++#if !defined (__ANDROID__)
+       octave::sys::password pw = octave::sys::password::getpwnam (username);
+ 
+       if (! pw)
+@@ -277,8 +277,11 @@
+             dirname = filename;
+         }
+       else
+-        dirname = pw.dir () + filename.substr (user_len+1);
+-
++      dirname = pw.dir () + filename.substr (user_len+1);
++#endif
++#ifdef __ANDROID__
++      dirname = getenv("HOME");
++#endif
+       return dirname;
+     }
+ 

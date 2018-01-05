@@ -1,0 +1,39 @@
+--- ../cache/octave-4.2.1/liboctave/system/oct-env.cc	2017-02-22 18:01:55.000000000 +0000
++++ ./liboctave/system/oct-env.cc	2017-11-01 02:52:53.267015299 +0000
+@@ -490,12 +490,15 @@
+ 
+       if (hd.empty ())
+         {
+-          octave::sys::password pw = octave::sys::password::getpwuid (
++#if defined (__ANDROID__)
++		hd = "/data/data/com.termux/files/home";
++#else
++ 	octave::sys::password pw = octave::sys::password::getpwuid (
+                                        octave::sys::getuid ());
+ 
+           hd = pw ? pw.dir () : std::string (octave::sys::file_ops::dir_sep_str ());
+-        }
+-
++#endif
++	} 
+       return hd;
+     }
+ 
+@@ -504,11 +507,15 @@
+     {
+       if (user_name.empty ())
+         {
+-          octave::sys::password pw = octave::sys::password::getpwuid (
++#if defined (__ANDROID__)
++	user_name = "termux_username";
++#else	
++	octave::sys::password pw = octave::sys::password::getpwuid (
+                                        octave::sys::getuid ());
+ 
+           user_name = pw ? pw.name () : std::string ("unknown");
+-        }
++#endif
++	}
+ 
+       return user_name;
+     }

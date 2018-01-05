@@ -1,0 +1,34 @@
+--- ../cache/qrupdate-1.1.2/Makeconf	2010-01-19 11:35:49.000000000 +0000
++++ ./Makeconf	2017-12-28 02:39:50.258992730 +0000
+@@ -1,26 +1,26 @@
+ # set this to your compiler's executable name (e.g. gfortran, g77)
+-FC=gfortran
++#FC=$(FC)
+ # requested flags
+ FFLAGS=-fimplicit-none -O3 -funroll-loops 
+ # set if you need shared library
+ FPICFLAGS=-fPIC
+ 
+ # BLAS library (only required for tests)
+-BLAS=-lblas
++BLAS= -L$(PREFIX)/lib -lopenblas
+ # LAPACK library (only required for tests)
+-LAPACK=-llapack
++LAPACK=-lopenblas
+ 
+ # Library version
+ VERSION=1.1
+ MAJOR=1
+ 
+ # The default library dir
+-LIBDIR=lib
++LIBDIR=$(TERMUX_PREFIX)/lib
+ 
+ # Destination installation offset
+ DESTDIR=
+ 
+ # set default prefix to /usr/local
+ ifeq ($(strip $(PREFIX)),)
+-  PREFIX=/usr/local
++  PREFIX=/data/data/com.termux/files/usr
+ endif

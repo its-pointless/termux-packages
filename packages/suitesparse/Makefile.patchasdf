@@ -1,0 +1,41 @@
+--- ../cache/SuiteSparse/Makefile	2017-04-01 00:30:39.000000000 +0000
++++ ./Makefile	2017-10-31 05:46:45.772260247 +0000
+@@ -107,7 +107,7 @@
+ 	$(RM) -r $(INSTALL_DOC)
+ 
+ # compile the dynamic libraries
+-library: metis
++library: 
+ 	( cd SuiteSparse_config && $(MAKE) )
+ 	( cd AMD && $(MAKE) library )
+ 	( cd BTF && $(MAKE) library )
+@@ -240,19 +240,19 @@
+ 
+ # configure and compile METIS, placing the libmetis.* library in
+ # SuiteSparse/lib and the metis.h include file in SuiteSparse/include.
+-metis: include/metis.h
++#metis: include/metis.h
+ 
+ # Install the shared version of METIS in SuiteSparse/lib.
+ # The SO_INSTALL_NAME commmand is only needed on the Mac, so *.dylib is
+ # hardcoded below.
+-include/metis.h:
+-ifeq (,$(MY_METIS_LIB))
+-	- ( cd metis-5.1.0 && $(MAKE) config shared=1 prefix=$(SUITESPARSE) )
+-	- ( cd metis-5.1.0 && $(MAKE) )
+-	- ( cd metis-5.1.0 && $(MAKE) install )
+-	- $(SO_INSTALL_NAME) $(SUITESPARSE)/lib/libmetis.dylib \
++#include/metis.h:
++#ifeq (,$(MY_METIS_LIB))
++#	- ( cd metis-5.1.0 && $(MAKE) config shared=1 prefix=$(SUITESPARSE) )
++#	- ( cd metis-5.1.0 && $(MAKE) )
++#	- ( cd metis-5.1.0 && $(MAKE) install )
++#	- $(SO_INSTALL_NAME) $(SUITESPARSE)/lib/libmetis.dylib \
+                              $(SUITESPARSE)/lib/libmetis.dylib
+-else
+-	@echo 'Using pre-installed METIS 5.1.0 library at ' '[$(MY_METIS_LIB)]'
+-endif
++#else
++#	@echo 'Using pre-installed METIS 5.1.0 library at ' '[$(MY_METIS_LIB)]'
++#endif
+ 

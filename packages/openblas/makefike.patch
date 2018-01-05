@@ -1,0 +1,11 @@
+--- ../cache/OpenBLAS-0.2.20/Makefile	2017-07-24 04:03:35.000000000 +0000
++++ ./Makefile	2017-11-04 22:18:47.937511811 +0000
+@@ -28,7 +28,7 @@
+ .PHONY : all libs netlib $(RELA) test ctest shared install
+ .NOTPARALLEL : all libs $(RELA) prof lapack-test install blas-test
+ 
+-all :: libs netlib $(RELA) tests shared
++all :: libs netlib $(RELA)  shared
+ 	@echo
+ 	@echo " OpenBLAS build complete. ($(LIB_COMPONENTS))"
+ 	@echo

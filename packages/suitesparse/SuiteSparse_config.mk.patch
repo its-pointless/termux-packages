@@ -1,0 +1,11 @@
+--- ../cache/SuiteSparse/SuiteSparse_config/SuiteSparse_config.mk	2017-10-03 22:20:02.000000000 +0000
++++ ./SuiteSparse_config/SuiteSparse_config.mk	2017-10-31 05:23:41.781211994 +0000
+@@ -339,7 +339,7 @@
+ 
+     ifeq ($(UNAME),Linux)
+         # add the realtime library, librt, and SuiteSparse/lib
+-        LDLIBS += -lrt -Wl,-rpath=$(INSTALL_LIB)
++        LDLIBS +=  -Wl,-rpath=$(INSTALL_LIB)
+     endif
+ 
+     #---------------------------------------------------------------------------

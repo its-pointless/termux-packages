@@ -1,0 +1,19 @@
+--- ../cache/octave-4.2.1/liboctave/util/kpse.cc	2017-02-22 18:01:55.000000000 +0000
++++ ./liboctave/util/kpse.cc	2017-11-01 02:54:24.735156310 +0000
+@@ -699,7 +699,7 @@
+          OS/2 doesn't have this concept.  */
+     }
+   else
+-#if defined (HAVE_PWD_H)
++#if defined (HAVE_PWD_H) && !defined (__ANDROID__)
+     {
+       unsigned c = 2;
+ 
+@@ -712,7 +712,6 @@
+       /* We only need the cast here for (deficient) systems
+          which do not declare 'getpwnam' in <pwd.h>.  */
+       octave::sys::password p = octave::sys::password::getpwnam (user);
+-
+       /* If no such user, just use '.'.  */
+       std::string home = p ? p.dir () : std::string (".");
+ 
