@@ -311,6 +311,8 @@ termux_step_setup_variables() {
 	TERMUX_PKG_BREAKS="" # https://www.debian.org/doc/debian-policy/ch-relationships.html#s-binarydeps
 	TERMUX_PKG_DEPENDS=""
 	TERMUX_PKG_BUILD_DEPENDS=""
+	TERMUX_PKG_GCC7BUILD=""
+	TERMUX_PKG_LIBGFORTRAN=""
 	TERMUX_PKG_HOMEPAGE=""
 	TERMUX_PKG_DESCRIPTION="FIXME:Add description"
 	TERMUX_PKG_KEEP_STATIC_LIBRARIES="false"
@@ -364,7 +366,12 @@ termux_step_handle_buildarch() {
 termux_step_start_build() {
 	# shellcheck source=/dev/null
 	source "$TERMUX_PKG_BUILDER_SCRIPT"
-
+	if [ "$TERMUX_PKG_GCC7BUILD" = "yes" ]; then
+		ln -sf /data/data/com.termux/files/usr/lib/libgfortran.so.4 /data/data/com.termux/files/usr/lib/libgfortran.so
+		export FC=$TERMUX_HOST_PLATFORM-gfortran
+		export BLAS="-lopenblas"
+		export LAPACK="-lopenblas"
+	fi
 	TERMUX_STANDALONE_TOOLCHAIN="$TERMUX_TOPDIR/_lib/${TERMUX_NDK_VERSION}-${TERMUX_ARCH}-${TERMUX_PKG_API_LEVEL}"
 	# Bump the below version if a change is made in toolchain setup to ensure
 	# that everyone gets an updated toolchain:
@@ -520,7 +527,10 @@ termux_step_host_build() {
 termux_step_setup_toolchain() {
 	# We put this after system PATH to avoid picking up toolchain stripped python
 	export PATH=$PATH:$TERMUX_STANDALONE_TOOLCHAIN/bin
-
+	export FFLAGS=" -Os -specs=$TERMUX_SCRIPTDIR/termux.spec"
+	export FCFLAGS=$FFLAGS
+	TOOLCHAINVERSION=$( basename $TERMUX_STANDALONE_TOOLCHAIN)
+	export GCC7_HOST_PREFIX="$TERMUX_TOPDIR/_lib/GCC-7-$TOOLCHAINVERSION"
 	export CFLAGS=""
 	export LDFLAGS="-L${TERMUX_PREFIX}/lib"
 
@@ -742,6 +752,22 @@ termux_step_setup_toolchain() {
 		exec $_HOST_PKGCONFIG "\$@"
 	HERE
 	chmod +x "$PKG_CONFIG"
+	if [ "$TERMUX_PKG_GCC7BUILD" = "yes" ]; then
+                export FC=${TERMUX_HOST_PLATFORM}-gfortran
+                if ! [  -e $GCC7_HOST_PREFIX/bin/$TERMUX_HOST_PLATFORM-gcc ]; then
+                        local TERMUX_PKG_GCC7BUILD=""
+                        _PATH=$PWD
+                        cd $TERMUX_SCRIPTDIR
+                        bash ./build-package.sh -sf scripts/gcc-7-host
+                        cd $_PATH
+                        TERMUX_PKG_GCC7BUILD="yes"
+                fi
+        fi
+
+        if [ "$TERMUX_PKG_GCC7BUILD" = "yes" ]; then
+                PATH=$GCC7_HOST_PREFIX/bin:$PATH
+        fi
+
 }
 
 # Apply all *.patch files for the package. Not to be overridden by packages.
@@ -985,10 +1011,16 @@ termux_step_massage() {
 
 	# Remove lib/charset.alias which is installed by gettext-using packages:
 	rm -f lib/charset.alias
+	# make sure only package that wants libgfortran gets it
+	if [  ${TERMUX_PKG_LIBGFORTRAN}x  = "yesx" ]; then
+        	echo "INCLUDING LIBGFORTRAN"
+	else
+        	rm -f lib/libgfortran.so
+        fi
 
 	# Remove non-english man pages:
 	test -d share/man && (cd share/man; for f in `ls | grep -v man`; do rm -Rf $f; done )
-
+	
 	if [ -z "${TERMUX_PKG_KEEP_INFOPAGES+x}" ]; then
 		# Remove info pages:
 		rm -Rf share/info

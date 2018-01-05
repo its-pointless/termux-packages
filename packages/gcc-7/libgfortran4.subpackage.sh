@@ -1,0 +1,3 @@
+TERMUX_SUBPKG_INCLUDE="lib/gcc/$TERMUX_HOST_PLATFORM/${TERMUX_PKG_VERSION}/libgfortran.so lib/gcc/$TERMUX_HOST_PLATFORM/${TERMUX_PKG_VERSION}/libgfortran.so.4 lib/gcc/$TERMUX_HOST_PLATFORM/${TERMUX_PKG_VERSION}/libgfortran.so.4.0.0 lib/libgfortran.so lib/libgfortran.so.4 lib/libgfortran.so.4.0.0 lib/gcc/$TERMUX_HOST_PLATFORM/${TERMUX_PKG_VERSION}/libquadmath.so lib/gcc/$TERMUX_HOST_PLATFORM/${TERMUX_PKG_VERSION}/libquadmath.so.0 lib/gcc/$TERMUX_HOST_PLATFORM/${TERMUX_PKG_VERSION}/libquadmath.so.0.0.0 lib/libquadmath.so lib/libquadmath.so.0 lib/libquadmath.so.0.0.0" 
+TERMUX_SUBPKG_DESCRIPTION="dynamic library for fortran"
+#TERMUX_SUBPKG_DEPENDS=""

@@ -1,0 +1,12 @@
+--- ../cache/gcc-linaro-7.2-2017.11/gcc/ada/init.c	2017-11-08 17:20:32.000000000 +0000
++++ ./gcc/ada/init.c	2018-01-02 22:20:48.438546697 +0000
+@@ -2542,7 +2542,9 @@
+   mcontext_t *mcontext = &((ucontext_t *) ucontext)->uc_mcontext;
+ 
+   /* ARM Bump has to be an even number because of odd/even architecture.  */
++#ifdef __ARM__
+   ((mcontext_t *) mcontext)->arm_pc += 2;
++#endif
+ }
+ 
+ static void

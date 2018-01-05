@@ -4,10 +4,10 @@
 # to add -fPIE and -pie flags as appropriate.
 
 *cc1_options:
-+ %{!fpie: %{!fPIE: %{!fpic: %{!fPIC: %{!fno-pic:-fPIE}}}}} 
++ %{!fpie: %{!fPIE: %{!fpic: %{!fPIC: %{!fno-pic:-fPIE}}}}}
 
 *cc1plus:
 + -I/data/data/com.termux/files/usr/include/c++/v1  %{!fpie: %{!fPIE: %{!fpic: %{!fPIC: %{!fno-pic:-fPIE}}}}}
 
 *link:
-+ -L/data/data/com.termux/files/usr/lib  %{!nopie: %{!static: %{!shared: %{!nostdlib: %{!nostartfiles: %{!fno-PIE: %{!fno-pie: -pie}}}}}}}
++ -L/data/data/com.termux/files/usr/lib --as-needed  -lgnat --no-as-needed %{!nopie: %{!static: %{!shared: %{!nostdlib: %{!nostartfiles: %{!fno-PIE: %{!fno-pie: -pie}}}}}}} 

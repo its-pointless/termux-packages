@@ -1,0 +1,4 @@
+TERMUX_SUBPKG_INCLUDE="lib/libgomp.a lib/libgomp.spec" 
+TERMUX_SUBPKG_DESCRIPTION="openmp library for gcc and gfortran"
+TERMUX_SUBPKG_VERSION="4.9.x"
+

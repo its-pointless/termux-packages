@@ -1,0 +1,19 @@
+--- ../cache/gcc-linaro-7.2-2017.11/gcc/ada/init.c	2017-11-08 17:20:32.000000000 +0000
++++ ./gcc/ada/init.c	2017-12-23 03:35:17.019210154 +0000
+@@ -59,9 +59,16 @@
+ #include <sys/stat.h>
+ 
+ /* We don't have libiberty, so use malloc.  */
++#ifdef __ANDROID__
++#define _LIBCPP_HAS_THREAD_API_PTHREAD 1
++#endif
+ #define xmalloc(S) malloc (S)
+ #else
+ #include "config.h"
++#ifdef __ANDROID__
++#define _LIBCPP_HAS_THREAD_API_PTHREAD 1
++#endif
++
+ #include "system.h"
+ #endif
+ 

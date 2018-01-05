@@ -1,0 +1,16 @@
+#!/data/data/com.termux/files/usr/bin/sh
+cd /data/data/com.termux/files/usr/bin
+if ! [ -e gfortran-7 ]; then
+	echo "install gcc-7 to use gfortran-7"
+	exit
+fi
+rm gcc
+rm g++
+rm cpp
+ln -sf gfortran-7 gfortran 
+ln -s clang gcc
+ln -s clang g++
+ln -s clang cpp
+ln -sf gcc cc
+ln -sf g++ c++
+echo "now using clang as default compiler with gfortran-7"

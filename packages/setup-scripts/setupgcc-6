@@ -1,0 +1,30 @@
+#!/data/data/com.termux/files/usr/bin/bash
+ARCH=$(dpkg --print-architecture)
+PLATFORM=${ARCH}-linux-android
+if [ $ARCH == "arm" ];
+then export PLATFORM=arm-linux-androideabi
+fi
+cd /data/data/com.termux/files/usr/bin/
+if [ -a /data/data/com.termux/files/usr/bin/gcc-6 ];  then
+ln -sf gcc-6 gcc
+ln -sf gcc cc
+ln -sf g++-6 g++
+ln -sf cpp-6 cpp
+ln -sf gfortran-6 gfortran 
+ln -sf gcc ${PLATFORM}-gcc
+ln -sf g++ ${PLATFORM}-g++
+ln -sf cpp ${PLATFORM}-cpp
+ln -sf g++ ${PLATFORM}-clang++
+ln -sf gcc ${PLATFORM}-clang
+ln -sf /data/data/com.termux/files/usr/lib/libgfortran.so.4 /data/data/com.termux/files/usr/lib/libgfortran.so
+if [ -a /data/data/com.termux/files/usr/bin/gcov-6 ]; then
+ln -sf gcov-6 gcov
+ln -sf gcov-tool-6 gcov-tool
+
+fi
+echo "gcc now points to gcc-6 this is kind of buggy only use this if you know what you are doing"
+else
+	echo "gcc-6 is not installed"
+fi
+# The reason i change the platform-clang as well is some python configuration uses that. without changing it
+# it breaks python module compiles that use fortran.

@@ -1,0 +1,12 @@
+--- ../cache/gcc-7.2.0/gcc/Makefile.in	2017-05-02 16:12:40.965506000 +0000
++++ ./gcc/Makefile.in	2017-10-31 01:19:31.209004389 +0000
+@@ -1897,8 +1897,7 @@
+ # "nul.s" on Windows. Because on Windows "nul" is a reserved file name.
+ # Specify the path to gcc/testsuite/selftests within the srcdir
+ # as an argument to -fself-test.
+-SELFTEST_FLAGS = -nostdinc -x c /dev/null -S -o /dev/null \
+-	-fself-test=$(srcdir)/testsuite/selftests
++SELFTEST_FLAGS = -nostdinc -x c /dev/null -S -o /dev/null 
+ 
+ # Run the selftests during the build once we have a driver and a cc1,
+ # so that self-test failures are caught as early as possible.

@@ -1,0 +1,47 @@
+--- ../cache/gcc-linaro-7.2-2017.11/libgcc/configure	2017-11-08 17:20:36.000000000 +0000
++++ ./libgcc/configure	2018-01-01 22:11:19.184533251 +0000
+@@ -2174,25 +2174,25 @@
+ 
+ 
+ # Check whether --enable-shared was given.
+-if test "${enable_shared+set}" = set; then :
+-  enableval=$enable_shared;
+-  case $enable_shared in
+-  yes | no) ;;
+-  *)
+-    enable_shared=no
+-    IFS="${IFS= 	}"; ac_save_ifs="$IFS"; IFS="${IFS}:,"
+-    for pkg in $enableval; do
+-      if test "X$pkg" = "Xgcc" || test "X$pkg" = "Xlibgcc"; then
+-	enable_shared=yes
+-      fi
+-    done
+-    IFS="$ac_save_ifs"
+-    ;;
+-  esac
+-
+-else
+-  enable_shared=yes
+-fi
++#if test "${enable_shared+set}" = set; then :
++#  enableval=$enable_shared;
++#  case $enable_shared in
++#  yes | no) ;;
++#  *)
++#    enable_shared=no
++#    IFS="${IFS= 	}"; ac_save_ifs="$IFS"; IFS="${IFS}:,"
++#    for pkg in $enableval; do
++#      if test "X$pkg" = "Xgcc" || test "X$pkg" = "Xlibgcc"; then
++#	enable_shared=yes
++#      fi
++#    done
++#    IFS="$ac_save_ifs"
++#    ;;
++#  esac
++
++#else
++  enable_shared=no
++#fi
+ 
+ 
+ 

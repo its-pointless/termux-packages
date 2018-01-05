@@ -1,0 +1,11 @@
+--- ../cache/gcc-7.2.0/libbacktrace/configure	2016-11-15 16:34:02.419649000 +0000
++++ ./libbacktrace/configure	2017-12-07 23:51:02.971003245 +0000
+@@ -11632,7 +11632,7 @@
+ 
+ 
+ if test -n "${with_target_subdir}"; then
+-  WARN_FLAGS="$WARN_FLAGS -Werror"
++  WARN_FLAGS="$WARN_FLAGS"
+ fi
+ 
+ 

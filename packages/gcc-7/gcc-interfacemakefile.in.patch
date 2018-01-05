@@ -1,0 +1,11 @@
+--- ../cache/gcc-7.2.0/gcc/ada/gcc-interface/Makefile.in	2017-06-15 22:22:18.678369000 +0000
++++ ./gcc/ada/gcc-interface/Makefile.in	2017-12-08 08:20:00.895477689 +0000
+@@ -195,7 +195,7 @@
+ # Link flags used to build gnat tools.  By default we prefer to statically
+ # link with libgcc to avoid a dependency on shared libgcc (which is tricky
+ # to deal with as it may conflict with the libgcc provided by the system).
+-GCC_LINK_FLAGS=-static-libstdc++ -static-libgcc
++GCC_LINK_FLAGS= -static-libgcc
+ 
+ # End of variables for you to override.
+ 

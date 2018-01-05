@@ -1,0 +1,11 @@
+--- ../cache/gcc-linaro-7.2-2017.11/libmpx/configure	2017-11-08 17:20:37.000000000 +0000
++++ ./libmpx/configure	2017-12-13 05:36:34.768199090 +0000
+@@ -2366,7 +2366,7 @@
+ fi
+ 
+ 
+-link_libmpx="-lpthread"
++link_libmpx=""
+ 
+ 
+ am__api_version='1.11'

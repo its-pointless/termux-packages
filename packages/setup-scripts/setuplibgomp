@@ -1,0 +1,14 @@
+#!/data/data/com.termux/files/usr/bin/sh
+TERMUX_HOST_PLATFORM=$(dpkg --print-architecture)-linux-android
+if [ -e /data/data/com.termux/files/usr/lib/libgomp.a.ndk ]; then
+if [ $TERMUX_HOST_PLATFORM = "arm-linux-android" ]; then
+	export TERMUX_HOST_PLATFORM="arm-linux-androideabi"
+fi
+rm /data/data/com.termux/files/usr/lib/libgomp.a
+ln -s /data/data/com.termux/files/usr/lib/libgomp.a.ndk /data/data/com.termux/files/usr/lib/libgomp.a
+rm /data/data/com.termux/files/usr/lib/gcc/$TERMUX_HOST_PLATFORM/7.2.1/include/omp.h
+ln -s /data/data/com.termux/files/usr/lib/gcc/$TERMUX_HOST_PLATFORM/7.2.1/include/omp.h.ndk /data/data/com.termux/files/usr/lib/gcc/$TERMUX_HOST_PLATFORM/7.2.1/include/omp.h
+echo "now using libgomp from ndk"
+else
+echo "libgomp not installed"
+fi
