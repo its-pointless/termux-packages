@@ -45,7 +45,7 @@ ln -s $TERMUX_STANDALONE_TOOLCHAIN/sysroot/usr/lib$BKA/libc.so $TERMUX_PKG_TMPDI
 export AR_FOR_TARGET="${TERMUX_HOST_PLATFORM}-ar"
 export AS_FOR_TARGET="${TERMUX_HOST_PLATFORM}-as"
 export _CC="${TERMUX_HOST_PLATFORM}-gcc"
-export CFLAGS_FOR_TARGET=" -specs=${TERMUX_SCRIPTDIR}/termux.spec -Os -I/data/data/com.termux/files/usr/include -I$TERMUX_STANDALONE_TOOLCHAIN/sysroot/usr/include -L$TERMUX_STANDALONE_TOOLCHAIN/sysroot/usr/lib -L${TERMUX_PREFIX}/lib -L$TERMUX_PKG_TMPDIR/lib"
+export CFLAGS_FOR_TARGET=" -specs=${TERMUX_SCRIPTDIR}/termux.spec -fpic  -Os -I/data/data/com.termux/files/usr/include -I$TERMUX_STANDALONE_TOOLCHAIN/sysroot/usr/include -L$TERMUX_STANDALONE_TOOLCHAIN/sysroot/usr/lib -L${TERMUX_PREFIX}/lib -L$TERMUX_PKG_TMPDIR/lib"
 #export CPP_FOR_TARGET="${TERMUX_HOST_PLATFORM}-cpp"
 export CPPFLAGS_FOR_TARGET="-I/data/data/com.termux/files/usr/include -I$TERMUX_STANDALONE_TOOLCHAIN/sysroot/usr/include"
 export CXXFLAGS_FOR_TARGET="-specs=${TERMUX_SCRIPTDIR}/termux.spec -I/data/data/com.termux/files/usr/include  -Os -I$TERMUX_STANDALONE_TOOLCHAIN/include/c++/4.9.x -I$TERMUX_STANDALONE_TOOLCHAIN/usr/include"
