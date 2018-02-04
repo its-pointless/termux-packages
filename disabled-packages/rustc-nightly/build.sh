@@ -18,10 +18,6 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 --disable-codegen-tests
 --enable-local-rust
 --enable-local-rebuild "
-#ac_cv_func__Unwind_Backtrace=no
-
-#TERMUX_PKG_CLANG=no
-#TERMUX_PKG_GCC7BUILD=yes
 termux_step_pre_configure () {
 	termux_setup_cmake
 	termux_setup_rust
@@ -67,9 +63,8 @@ termux_step_pre_configure () {
 		export LD_armv7_linux_androideabi="$LD"
 		export ARMV7_LINUX_ANDROIDEABI_OPENSSL_LIB_DIR=$TERMUX_PKG_TMPDIR/lib
                 export ARMV7_LINUX_ANDROIDEABI_OPENSSL_INCLUDE_DIR=$TERMUX_PKG_TMPDIR/include
-	else #LDFLAGS_aarch64_linux_android="-L/home/builder/.termux-build/rustc-nightly/build/build/aarch64-linux-android/stage2/lib/rustlib/aarch64-linux-android/lib"
+	else 
 		export LDFLAGS_${TERMUX_ARCH}_linux_android="-L$TERMUX_PKG_BUILDDIR/build/$RUST_TARGET_TRIPLE/llvm/lib  -L$TERMUX_PKG_BUILDDIR/build/$RUST_TARGET_TRIPLE/stage2/lib/rustlib/$RUST_TARGET_TRIPLE/lib"
-#		export CFLAGS_${TERMUX_ARCH}_linux_android="$CFLAGS $CPPFLAGS $LDFLAGS"
 		export CFLAGS_${TERMUX_ARCH}_linux_android="$CFLAGS" # -L$TERMUX_PKG_BUILDDIR/build/$RUST_TARGET_TRIPLE/llvm/lib -lLLVMCore"
 		export LD_${TERMUX_ARCH}_linux_android="$LD"
 		export CXXFLAGS_${TERMUX_ARCH}_linux_android="$CXXFLAGS" #	-L$TERMUX_PKG_BUILDDIR/build/$RUST_TARGET_TRIPLE/llvm/lib -lLLMCore"
@@ -77,10 +72,6 @@ termux_step_pre_configure () {
 	# x86_64 fails to build full documentation due to build system libs being linked. 
 	export ${CARCH}_LINUX_ANDROID_OPENSSL_INCLUDE_DIR=$TERMUX_PKG_TMPDIR/include
         export ${CARCH}_LINUX_ANDROID_OPENSSL_LIB_DIR=$TERMUX_PKG_TMPDIR/lib
-#	if [ $CARCH = "ARMV7" ]; then
- #               export ARMV7_LINUX_ANDROIDEABI_OPENSSL_LIB_DIR=$TERMUX_PKG_TMPDIR/lib
-  #              export ARMV7_LINUX_ANDROIDEABI_OPENSSL_INCLUDE_DIR=$TERMUX_PKG_TMPDIR/include
-   #     fi
 	export PKG_CONFIG_PATH=$TERMUX_PKG_TMPDIR/lib/pkgconfig
 	cp $TERMUX_PREFIX/include/libssh2* $TERMUX_PKG_TMPDIR/include
         cp $TERMUX_PREFIX/lib/libssh2* $TERMUX_PKG_TMPDIR/lib

@@ -42,9 +42,9 @@ termux_step_pre_configure () {
 	if [ $TERMUX_ARCH != "x86_64" ]; then
 	    cp $TERMUX_STANDALONE_TOOLCHAIN/sysroot/usr/lib/libz.so $TERMUX_PKG_TMPDIR/lib
 	fi
-	# most configuration is done with this file
 	export RUST_BACKTRACE=1	
 	export PATH=$TERMUX_PKG_TMPDIR/bin:$PATH
+	# most configuration is done with this file
 	echo "$GCCT -L$TERMUX_PKG_TMPDIR/lib -I$TERMUX_PKG_TMPDIR/include \$@" > $TERMUX_PKG_TMPDIR/bin/$CC
 	echo "$GCCP -L$TERMUX_PKG_TMPDIR/lib -I$TERMUX_PKG_TMPDIR/include \$@" > $TERMUX_PKG_TMPDIR/bin/$CXX
 	chmod +x $TERMUX_PKG_TMPDIR/bin/$CC
@@ -69,7 +69,6 @@ termux_step_pre_configure () {
 		export LD_${TERMUX_ARCH}_linux_android="$CC"
 		export CXXFLAGS_${TERMUX_ARCH}_linux_android="$CXXFLAGS" #	-L$TERMUX_PKG_BUILDDIR/build/$RUST_TARGET_TRIPLE/llvm/lib -lLLMCore"
 	fi
-	# x86_64 fails to build full documentation due to build system libs being linked. 
 	
 	export ${CARCH}_LINUX_ANDROID_OPENSSL_INCLUDE_DIR=$TERMUX_PKG_TMPDIR/include
 	export ${CARCH}_LINUX_ANDROID_OPENSSL_LIB_DIR=$TERMUX_PKG_TMPDIR/lib
@@ -81,6 +80,7 @@ termux_step_pre_configure () {
 	cp $TERMUX_PREFIX/include/libssh2* $TERMUX_PKG_TMPDIR/include
 	cp $TERMUX_PREFIX/lib/libssh2* $TERMUX_PKG_TMPDIR/lib
 	cp $TERMUX_PREFIX/lib/pkgconfig/libssh2.pc  $TERMUX_PKG_TMPDIR/lib/pkgconfig
+	# x86_64 fails to build full documentation due to build system libs being linked.
 	if [ $TERMUX_ARCH = "x86_64" ]; then
 		sed $TERMUX_PKG_BUILDER_DIR/config.tomlx86_64 \
 			-e "s|@TERMUX_PREFIX@|$TERMUX_PREFIX|g" \
@@ -102,7 +102,6 @@ termux_step_pre_configure () {
 	unset CFLAGS CXXFLAGS LDFLAGS CC CXX LD CPP CPPFLAGS PREFIX PKG_CONFIG_PATH 
 	export _arch_args="--host=$RUST_TARGET_TRIPLE --target=$RUST_TARGET_TRIPLE"
 	TERMUX_PKG_EXTRA_CONFIGURE_ARGS+=" $_arch_args --local-rust-root=$RUSTUP_HOME"
-	set > ~/rustc_setb4make
 }
 
 termux_step_make () {
@@ -115,6 +114,7 @@ termux_step_make () {
 export LD_LIBRARY_PATH="/home/builder/.termux-build/rustc/build/build/x86_64-unknown-linux-gnu/stage2/lib"
 #	make
 #	make dist # CFG_TARGET=$RUST_TARGET_TRIPLE  CFG_HOST=$RUST_TARGET_TRIPLE
+#if this below looks silly i have to do this to work around https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1736808
 if [ $TERMUX_ARCH = "x86_64" ] ; then
 	../src/x.py dist --host $RUST_TARGET_TRIPLE --target $RUST_TARGET_TRIPLE  || ../src/x.py dist --host $RUST_TARGET_TRIPLE --target $RUST_TARGET_TRIPLE  || ../src/x.py dist --host $RUST_TARGET_TRIPLE --target $RUST_TARGET_TRIPLE ||  ../src/x.py build --stage 2 ../src/src/tools/rustdoc --target x86_64-unknown-linux-gnu  --host x86_64-unknown-linux-gnu && ../src/x.py dist --host $RUST_TARGET_TRIPLE --target $RUST_TARGET_TRIPLE
 	else
@@ -131,7 +131,6 @@ termux_step_make_install () {
                 	$TERMUX_PKG_BUILDDIR/install/$tar-$TERMUX_PKG_VERSION-$RUST_TARGET_TRIPLE/install.sh --uninstall --prefix=$TERMUX_PREFIX || true
                 	$TERMUX_PKG_BUILDDIR/install/$tar-$TERMUX_PKG_VERSION-$RUST_TARGET_TRIPLE/install.sh --prefix=$TERMUX_PREFIX
 		done
-#rls-0.123.1-aarch64-linux-android.tar.gz
 		tar -xf $TERMUX_PKG_BUILDDIR/build/dist/rls-$RLS_VERSION-$RUST_TARGET_TRIPLE.tar.gz -C $TERMUX_PKG_BUILDDIR/install
 		 $TERMUX_PKG_BUILDDIR/install/rls-$RLS_VERSION-$RUST_TARGET_TRIPLE/install.sh --uninstall --prefix=$TERMUX_PREFIX || true
 		  $TERMUX_PKG_BUILDDIR/install/rls-$RLS_VERSION-$RUST_TARGET_TRIPLE/install.sh  --prefix=$TERMUX_PREFIX 
