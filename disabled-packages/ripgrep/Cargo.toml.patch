@@ -1,0 +1,8 @@
+--- ../cache/ripgrep-0.7.1/Cargo.toml	2017-10-22 14:33:09.000000000 +0000
++++ ./Cargo.toml	2017-11-10 10:47:28.018920018 +0000
+@@ -60,4 +60,4 @@
+ ]
+ 
+ [profile.release]
+-debug = true
++debug = false
