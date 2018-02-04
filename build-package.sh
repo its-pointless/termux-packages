@@ -980,16 +980,21 @@ termux_step_configure () {
 termux_step_post_configure () {
 	return
 }
-
 termux_step_make() {
-	if ls ./*akefile &> /dev/null; then
-		if [ -z "$TERMUX_PKG_EXTRA_MAKE_ARGS" ]; then
-			make -j $TERMUX_MAKE_PROCESSES
-		else
-			make -j $TERMUX_MAKE_PROCESSES ${TERMUX_PKG_EXTRA_MAKE_ARGS}
-		fi
-	fi
+        if ls ./*akefile &> /dev/null; then
+                if [ -z "$TERMUX_PKG_EXTRA_MAKE_ARGS" ]; then
+                        make -j $TERMUX_MAKE_PROCESSES
+                else
+                        make -j $TERMUX_MAKE_PROCESSES ${TERMUX_PKG_EXTRA_MAKE_ARGS}
+                fi
+        elif [ -n "$RUSTUP_HOME" ] && ls ./Cargo.toml &> /dev/null; then
+                local _mode="--release"
+
+                test -n "$TERMUX_DEBUG" && _mode=""
+                cargo build $_mode --jobs $TERMUX_MAKE_PROCESSES --target=$RUST_TARGET_TRIPLE
+        fi
 }
+
 
 termux_step_make_install() {
 	if ls ./*akefile &> /dev/null; then
