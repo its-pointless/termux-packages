@@ -1,0 +1,11 @@
+--- ../cache/libXfont2-2.0.1/include/libxfontint.h	2015-12-09 04:36:38.000000000 +0000
++++ ./include/libxfontint.h	2018-02-16 05:53:20.915084761 +0000
+@@ -22,7 +22,7 @@
+ 
+ #ifndef _LIBXFONTINT_H_
+ #define _LIBXFONTINT_H_
+-
++#define NOFILES_MAX 255
+ #include <X11/fonts/FSproto.h>
+ 
+ #define client_auth_generation __libxfont__client_auth_generation

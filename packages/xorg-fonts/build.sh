@@ -36,12 +36,14 @@ _sums=( 505d9b12a7093389e67a925dfda6346bde26d114c67f0cdca7aeda6e5d3344f4
 	b8e77940e4e1769dc47ef1805918d8c9be37c708735832a07204258bacc11794
 	e444028656e0767e2eddc6d9aca462b16a2be75a47244dbc199b2c44eca87e5a )
 
-termux_step_post_extract_package () {
-	for fontindex in "${!_font[@]}"; do
+termux_step_configure () {
+	for fontindex in {0..13}; do
 		file=font-${_font[fontindex]}.tar.bz2
 		test ! -f $TERMUX_PKG_CACHEDIR/$file && termux_download $_url/$file $TERMUX_PKG_CACHEDIR/$file ${_sums[fontindex]}
 		tar xf $TERMUX_PKG_CACHEDIR/$file -C $TERMUX_PKG_SRCDIR
 		cd $TERMUX_PKG_SRCDIR/font-${_font[fontindex]}
+		cp $TERMUX_SCRIPTDIR/scripts/config.guess .
+		cp $TERMUX_SCRIPTDIR/scripts/config.sub .
 		./configure --prefix $TERMUX_PREFIX --host $TERMUX_HOST_PLATFORM --with-fontdir=$TERMUX_PREFIX/share/fonts/misc
 		make install
 	done

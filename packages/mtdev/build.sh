@@ -1,0 +1,8 @@
+TERMUX_PKG_HOMEPAGE=https://ohse.de/uwe/software/lrzsz.html
+TERMUX_PKG_DESCRIPTION="Tools for zmodem/xmodem/ymodem file transfer"
+TERMUX_PKG_VERSION=0.12.20
+TERMUX_PKG_SRCURL=http://bitmath.org/code/mtdev/mtdev-1.1.5.tar.bz2
+TERMUX_PKG_SHA256=6677d5708a7948840de734d8b4675d5980d4561171c5a8e89e54adf7a13eba7f
+#TERMUX_PKG_BUILD_IN_SRC=yes
+TERMUX_PKG_EXTRA_CONFIGURE_ARGS=""
+#TERMUX_PKG_HOSTBUILD=true

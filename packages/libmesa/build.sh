@@ -7,13 +7,12 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 --disable-gles1
 --disable-gles2
 --enable-libdrm
---enable-dri3
+--disable-dri3
 --disable-gbm
 --disable-egl
 --with-platforms=x11
 --without-dri-drivers
 --without-gallium-drivers
---enable-glx=dri
 ac_cv_header_xlocale_h=no
 "
 
