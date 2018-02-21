@@ -1,0 +1,39 @@
+--- ../cache/xorg-input-mtev-045eda60dfc381206a0b4c9511e9d99e9d50b805/Makefile	2015-11-03 13:37:05.000000000 +0000
++++ ./Makefile	2018-02-21 22:24:34.934282242 +0000
+@@ -20,10 +20,10 @@
+ #LIBS	= -lpixman-1
+ LIBS   += $(shell pkg-config --libs mtdev)
+ 
+-DLIB	= usr/lib/xorg/modules/input
++DLIB	= /data/data/com.termux/files/usr/lib/xorg/modules/input
+ # DFDI	= usr/share/hal/fdi/policy/20thirdparty
+ 
+-INCLUDE = -I/usr/include/xorg -I/usr/include/pixman-1 $(shell pkg-config --cflags mtdev)
++INCLUDE = -I/data/data/com.termux/files/usr/include/xorg -I/data/data/com.termux/files/usr/include/pixman-1 $(shell pkg-config --cflags mtdev)
+ OPTS	= -g -Wall -fpic
+ 
+ .PHONY: all clean
+@@ -36,19 +36,19 @@
+ 
+ bin/%:	obj/%.o
+ 	@mkdir -p $(@D)
+-	gcc $< -o $@
++	$(CC) $< -o $@
+ 
+ $(TLIB): $(OBJS)
+ 	@rm -f $(TLIB)
+-	gcc -shared $(OBJS) -Wl,-soname -Wl,$(LIBRARY) -o $@ $(LIBS)
++	$(CC) -shared $(OBJS) -Wl,-soname -Wl,$(LIBRARY) -o $@ $(LIBS)
+ 
+ obj/%.o: %.c
+ 	@mkdir -p $(@D)
+-	gcc $(INCLUDE) $(OPTS) -c $< -o $@
++	$(CC) $(INCLUDE) $(OPTS) -c $< -o $@
+ 
+ obj/%.o: %.cc
+ 	@mkdir -p $(@D)
+-	gcc $(INCLUDE) $(OPTS) -c $< -o $@
++	$(CC) $(INCLUDE) $(OPTS) -c $< -o $@
+ 
+ clean:
+ 	rm -rf bin obj

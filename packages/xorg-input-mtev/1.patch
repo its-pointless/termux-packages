@@ -1,0 +1,81 @@
++++ xorg-input-mtev/autogen.sh	2018-01-14 17:23:06.119152935 +0755
+@@ -0,0 +1,79 @@
++#!/bin/bash
++
++# existing build system fails on linking step, need to use own script
++
++for i in "$@"
++do
++case $i in
++    --with-xkb-config-root=*)
++    DFLT_XKB_CONFIG_ROOT="-DDFLT_XKB_CONFIG_ROOT='\"${i#*=}\"'"
++    shift # past argument=value
++    ;;
++    *)
++          # unknown option
++          shift
++    ;;
++esac
++done
++
++touch config.log
++[ -f Makefile ] && rm Makefile
++cat <<EOF > Makefile
++CC=$CC
++CPP=$CPP
++CXX=$CXX
++LD=$LD
++AR=$AR
++RANLIB=$RANLIB
++STRIP=$STRIP
++
++LIBRARY	= mtev_drv.so
++MODULES = src
++
++o_src	= caps \
++	hw \
++	mtouch \
++	multitouch
++
++OBJECTS	= \$(addsuffix .o,\
++	\$(foreach mod,\$(MODULES),\
++	\$(addprefix \$(mod)/,\$(o_\$(mod)))))
++
++TLIB	= \$(addprefix obj/,\$(LIBRARY))
++OBJS	= \$(addprefix obj/,\$(OBJECTS))
++LIBS   += \$(shell pkg-config --libs mtdev)
++
++DLIB	= $PROJECT_ROOT/sysroot/lib/xorg/modules/input/
++
++INCLUDE = -I$PROJECT_ROOT/sysroot/include/xorg -I$PROJECT_ROOT/sysroot/include/pixman-1 \$(shell pkg-config --cflags mtdev)
++OPTS	= -g -Wall -fpic
++
++.PHONY: all clean
++.PRECIOUS: obj/%.o
++
++all:	\$(OBJS) \$(TLIB) \$(TOBJ)
++
++bin/%:	obj/%.o
++	@mkdir -p \$(@D)
++	\$(CC) \$< -o \$@
++
++\$(TLIB): \$(OBJS)
++	@rm -f \$(TLIB)
++	\$(CC) \$(LDFLAGS) -shared \$(OBJS) -Wl,-soname -Wl,\$(LIBRARY) -o \$@ \$(LIBS) -L$PROJECT_ROOT/sysroot/lib/xorg/modules/ -lXorg -Wl,--unresolved-symbols=report-all
++
++obj/%.o: %.c
++	@mkdir -p \$(@D)
++	\$(CC) \$(CFLAGS) \$(INCLUDE) \$(OPTS) -c \$< -o \$@
++
++obj/%.o: %.cc
++	@mkdir -p \$(@D)
++	\$(CC) \$(CFLAGS) \$(INCLUDE) \$(OPTS) -c \$< -o \$@
++
++clean:
++	rm -rf bin obj
++
++install: \$(TLIB) \$(TFDI)
++	install -d "\$(DLIB)"
++	install -m 755 \$(TLIB) "\$(DLIB)"
++
++EOF
