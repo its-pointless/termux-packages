@@ -4,7 +4,7 @@ TERMUX_PKG_SHA256=a732502f1db000cf36a376cd0c010ffdbf32ecdd7f1fa08ba7f5bdf9601cc1
 TERMUX_PKG_BUILD_IN_SRC=yes
 TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 --disable-libdrm
---enable-glx
+--disable-glx
 --disable-mitshm
 --enable-composite
 --enable-xres
@@ -33,9 +33,9 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 --disable-linux-acpi
 --disable-linux-apm
 --disable-strict-compilation
---disable-listen-tcp
+--enable-listen-tcp
 --disable-listen-unix
---disable-listen-linux
+--enable-listen-linux
 --disable-visibility
 --disable-xnest
 --disable-xquartz
