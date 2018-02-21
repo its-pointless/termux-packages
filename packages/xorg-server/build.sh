@@ -53,7 +53,6 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 --enable-input-thread
 --enable-xtrans-send-fds
 --enable-xvfb
---disable-xorg
 --disable-dmx
 --enable-ipv6
 --enable-tcp-transport
