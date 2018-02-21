@@ -1,5 +1,14 @@
 --- ../cache/pulseaudio-11.1/src/Makefile.am	2017-09-18 10:41:02.000000000 +0000
-+++ ./src/Makefile.am	2017-12-22 22:51:30.628573929 +0000
++++ ./src/Makefile.am	2018-02-21 04:14:25.509685591 +0000
+@@ -122,7 +122,7 @@
+ if HAVE_X11
+ xdgautostart_in_files = \
+ 		daemon/pulseaudio.desktop.in
+-xdgautostart_DATA = $(xdgautostart_in_files:.desktop.in=.desktop)
++#xdgautostart_DATA = $(xdgautostart_in_files:.desktop.in=.desktop)
+ @INTLTOOL_DESKTOP_RULE@
+ endif
+ 
 @@ -1559,7 +1559,8 @@
  		module-switch-on-port-available-symdef.h \
  		module-filter-apply-symdef.h \

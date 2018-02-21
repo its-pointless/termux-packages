@@ -7,22 +7,24 @@ TERMUX_PKG_SRCURL=https://www.freedesktop.org/software/pulseaudio/releases/pulse
 TERMUX_PKG_DEPENDS="libltdl, libsndfile, libandroid-glob, libsoxr"
 TERMUX_PKG_BUILD_DEPENDS="libtool"
 TERMUX_PKG_INCLUDE_IN_DEVPACKAGE="share/vala"
+TERMUX_PKG_BUILD_IN_SRC=yes
 TERMUX_PKG_EXTRA_CONFIGURE_ARGS="--disable-neon-opt
 --disable-alsa
 --disable-esound
---disable-glib2
 --disable-openssl
 --without-caps
 --with-database=simple
---disable-memfd
 --bindir=$TERMUX_PREFIX/libexec"
 TERMUX_PKG_CONFFILES="etc/pulse/client.conf etc/pulse/daemon.conf etc/pulse/default.pa etc/pulse/system.pa"
 
 termux_step_pre_configure () {
 	mkdir $TERMUX_PKG_SRCDIR/src/modules/sles
 	cp $TERMUX_PKG_BUILDER_DIR/module-sles-sink.c $TERMUX_PKG_SRCDIR/src/modules/sles
+
+#	NOCONFIGURE=34 ./bootstrap.sh
 	intltoolize --automake --copy --force
 	LDFLAGS+=" -llog -landroid-glob"
+#	CFLAGS+=" -DDESKTOPFILEDIR=$TERMUX_PREFIX/share/applications"
 }
 
 termux_step_post_make_install () {
@@ -43,7 +45,7 @@ termux_step_post_make_install () {
 	echo "load-module module-sles-sink" >> $TERMUX_PREFIX/etc/pulse/default.pa
 	cd $TERMUX_PREFIX/libexec
 
-	for bin in esdcompat pacat pacmd pactl pasuspender pulseaudio; do
+	for bin in esdcompat pacat pacmd pactl pasuspender pulseaudio pax11publish; do
 		rm -f ../bin/$bin
 		local PA_LIBS="" lib
 		for lib in android-glob pulse pulsecommon-11.1 pulsecore-11.1; do
@@ -55,4 +57,6 @@ termux_step_post_make_install () {
 		echo "LD_LIBRARY_PATH=/system/$SYSTEM_LIB:/system/vendor/$SYSTEM_LIB:$TERMUX_PREFIX/lib exec $TERMUX_PREFIX/libexec/$bin \$@" >> $TERMUX_PREFIX/bin/$bin
 		chmod +x $TERMUX_PREFIX/bin/$bin
 	done
+	mkdir -p $TERMUX_PREFIX/etc/xdg/autostart
+	cp $TERMUX_PKG_SRCDIR/src/daemon/pulseaudio.desktop.in $TERMUX_PREFIX/etc/xdg/autostart/pulseaudio.desktop
 }
