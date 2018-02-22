@@ -47,7 +47,7 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 --disable-kdrive-kbd
 --disable-xephyr
 --disable-xfake
---disable-xfbdev
+--enable-xfbdev
 --disable-local-transport
 --disable-secure-rpc
 --enable-input-thread
@@ -74,7 +74,8 @@ termux_step_pre_configure () {
 
 termux_step_post_make_install () {
 	rm -f "${TERMUX_PREFIX}/usr/share/X11/xkb/compiled"
-}
+	cp -rf  $TERMUX_PREFIX/include/xorg $TERMUX_PREFIX/include/X11/ 
+    }
 
 if [ "$#" -eq 1 ] && [ "$1" == "xorg_server_flags" ]; then
         echo $TERMUX_PKG_EXTRA_CONFIGURE_ARGS
