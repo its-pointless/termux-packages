@@ -3,10 +3,13 @@ TERMUX_PKG_VERSION=1.19.1
 TERMUX_PKG_NO_DEVELSPLIT=true
 TERMUX_PKG_PLATFORM_INDEPENDENT=true
 TERMUX_PKG_BUILD_IN_SRC=true
+TERMUX_PKG_DEPENDS="xorg-macros"
+
 termux_step_post_extract_package () {
 	# not required: dmxproto
-	export _PROTOS=(xproto-7.0.31 xextproto-7.3.0 xcmiscproto-1.2.2 randrproto-1.5.0 renderproto-0.11.1 bigreqsproto-1.1.2 compositeproto-0.4.2 fixesproto-5.0 fontsproto-2.1.3 damageproto-1.2.1 glproto-1.4.17 inputproto-2.3.2 kbproto-1.0.7 resourceproto-1.2.0 dmxproto-2.3.1 presentproto-1.1 recordproto-1.14.2 xineramaproto-1.2.1 dri2proto-2.8)
-export _SHASUMS=('c6f9747da0bd3a95f86b17fb8dd5e717c8f3ab7f0ece3ba1b247899ec1ef7747' \
+	export _PROTOS=(xf86dgaproto-2.1 xproto-7.0.31 xextproto-7.3.0 xcmiscproto-1.2.2 randrproto-1.5.0 renderproto-0.11.1 bigreqsproto-1.1.2 compositeproto-0.4.2 fixesproto-5.0 fontsproto-2.1.3 damageproto-1.2.1 glproto-1.4.17 inputproto-2.3.2 kbproto-1.0.7 resourceproto-1.2.0 dmxproto-2.3.1 presentproto-1.1 recordproto-1.14.2 xineramaproto-1.2.1 dri2proto-2.8)
+export _SHASUMS=('ac5ef65108e1f2146286e53080975683dae49fc94680042e04bd1e2010e99050' \
+		 'c6f9747da0bd3a95f86b17fb8dd5e717c8f3ab7f0ece3ba1b247899ec1ef7747' \
 		 'f3f4b23ac8db9c3a9e0d8edb591713f3d70ef9c3b175970dd8823dfc92aa5bb0' \
 		 'b13236869372256c36db79ae39d54214172677fb79e9cdc555dceec80bd9d2df' \
 		 '4c675533e79cd730997d232c8894b6692174dce58d3e207021b8f860be498468' \
@@ -26,7 +29,7 @@ export _SHASUMS=('c6f9747da0bd3a95f86b17fb8dd5e717c8f3ab7f0ece3ba1b247899ec1ef77
 		 '977574bb3dc192ecd9c55f59f991ec1dff340be3e31392c95deff423da52485b' \
 		 'f9b55476def44fc7c459b2537d17dbc731e36ed5d416af7ca0b1e2e676f8aa04')
 cd $TERMUX_PKG_SRCDIR
-for index in {0..18} 
+for index in {0..19} 
 	do
 		file="${_PROTOS[$index]}.tar.bz2"
 		shasum="${_SHASUMS[$index]}"
@@ -36,7 +39,7 @@ for index in {0..18}
 }
 
 termux_step_configure () {
-    for index in {0..18}
+    for index in {0..19}
 	do
 		dir="${_PROTOS[$index]}"
 		cd $TERMUX_PKG_SRCDIR/$dir
