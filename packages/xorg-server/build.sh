@@ -57,6 +57,7 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 --enable-ipv6
 --enable-tcp-transport
 --enable-unix-transport
+--enable-xorg
 --disable-libunwind
 --with-sha1=libcrypto
 --with-fontrootdir=$TERMUX_PREFIX/share/fonts
@@ -74,8 +75,7 @@ termux_step_pre_configure () {
 
 termux_step_post_make_install () {
 	rm -f "${TERMUX_PREFIX}/usr/share/X11/xkb/compiled"
-	cp -rf  $TERMUX_PREFIX/include/xorg $TERMUX_PREFIX/include/X11/ 
-    }
+}
 
 if [ "$#" -eq 1 ] && [ "$1" == "xorg_server_flags" ]; then
         echo $TERMUX_PKG_EXTRA_CONFIGURE_ARGS
