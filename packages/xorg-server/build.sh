@@ -46,7 +46,6 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 --disable-kdrive-evdev
 --disable-kdrive-kbd
 --disable-xephyr
---disable-xfake
 --enable-xfbdev
 --disable-local-transport
 --disable-secure-rpc
@@ -63,18 +62,17 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 --with-fontrootdir=$TERMUX_PREFIX/share/fonts
 --with-xkb-path=$TERMUX_PREFIX/share/X11/xkb
 LIBS=-landroid-shmem"
-TERMUX_PKG_DEPENDS="libandroid-shmem, libx11, libxfont2, libxkbfile, libxau, libpixman, openssl, xorg-xkbcomp, libxshmfence, libxdmcp, openssl"
+TERMUX_PKG_DEPENDS="libandroid-shmem, libx11, libxfont2, libxkbfile, libxau, libpixman, openssl, xorg-xkbcomp, libxshmfence, libxdmcp"
 # --disable-xorg
 termux_step_pre_configure () {
 	CFLAGS="$CFLAGS -DFNDELAY=O_NDELAY"
 	if [ -n "$TERMUX_DEBUG" ]; then
 		TERMUX_PKG_EXTRA_CONFIGURE_ARGS+=" --enable-debug"
 	fi
-#    CPPFLAGS+=" -I$TERMUX_PKG_SRCDIR/include"
-    }
+}
 
 termux_step_post_make_install () {
-	rm -f "${TERMUX_PREFIX}/usr/share/X11/xkb/compiled"
+	rm -rf "${TERMUX_PREFIX}/share/X11/xkb/compiled"
 }
 
 if [ "$#" -eq 1 ] && [ "$1" == "xorg_server_flags" ]; then
