@@ -1,0 +1,7 @@
+#!/data/data/com.termux/files/usr/bin/sh
+export PATH="$PATH:/system/bin"
+export CLASSPATH=/data/data/com.termux/files/usr/libexec/termux-view-test/test.apk
+#unset LD_LIBRARY_PATH LD_PRELOAD
+unset LD_PRELOAD
+export LD_LIBRARY_PATH=/vendor/lib:/system/lib:$PREFIX/lib
+exec /system/bin/app_process / com.example.termuxView.Test "$@"
