@@ -1,8 +1,7 @@
-diff -u -r ../upstream.git/apt-private/private-output.cc ./apt-private/private-output.cc
---- ../upstream.git/apt-private/private-output.cc	2014-06-10 15:24:50.000000000 +0200
-+++ ./apt-private/private-output.cc	2014-06-15 02:40:10.539223656 +0200
-@@ -20,7 +20,11 @@
- #include <string.h>
+--- ../cache/apt-1.6.1/apt-private/private-output.cc	2018-04-20 10:08:18.000000000 +0000
++++ ./apt-private/private-output.cc	2018-04-21 22:56:40.845156144 +0000
+@@ -15,7 +15,12 @@
+ 
  #include <iomanip>
  #include <iostream>
 -#include <langinfo.h>
@@ -11,10 +10,11 @@ diff -u -r ../upstream.git/apt-private/private-output.cc ./apt-private/private-o
 +# else
 +#  include <langinfo.h>
 +#endif
- #include <unistd.h>
++
+ #include <regex.h>
  #include <signal.h>
- #include <sys/ioctl.h>
-@@ -764,7 +768,7 @@
+ #include <stdio.h>
+@@ -732,7 +737,7 @@
     regex_t Pattern;
     int Res;
  
