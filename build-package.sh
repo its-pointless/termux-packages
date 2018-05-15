@@ -327,7 +327,7 @@ termux_step_setup_variables() {
 	TERMUX_PKG_MAINTAINER="Fredrik Fornwall @fornwall"
 	TERMUX_PKG_CLANG=yes # does nothing for cmake based packages. clang is chosen by cmake
 	TERMUX_PKG_FORCE_CMAKE=no # if the package has autotools as well as cmake, then set this to prefer cmake
-
+	TERMUX_PKG_NINJA="no"
 	unset CFLAGS CPPFLAGS LDFLAGS CXXFLAGS
 }
 
@@ -892,10 +892,20 @@ termux_step_configure_cmake () {
 
 	local CMAKE_PROC=$TERMUX_ARCH
 	test $CMAKE_PROC == "arm" && CMAKE_PROC='armv7-a'
+	
+	if [ $TERMUX_PKG_NINJA = "no" ]; then
+		CMAKE_GENERATE="Unix Makefiles"
+		CMAKE_MAKE="`which make`"
+	else
+		termux_setup_ninja
+		CMAKE_GENERATE="Ninja"
+		CMAKE_MAKE="`which ninja`"
+	fi
+
 
 	# XXX: CMAKE_{AR,RANLIB} needed for at least jsoncpp build to not
 	# pick up cross compiled binutils tool in $PREFIX/bin:
-	cmake -G 'Unix Makefiles' "$TERMUX_PKG_SRCDIR" \
+	cmake -G "$CMAKE_GENERATE" "$TERMUX_PKG_SRCDIR" \
 		-DCMAKE_AR="$(which $AR)" \
 		-DCMAKE_UNAME="$(which uname)" \
 		-DCMAKE_RANLIB="$(which $RANLIB)" \
@@ -915,6 +925,7 @@ termux_step_configure_cmake () {
 		-DCMAKE_SKIP_INSTALL_RPATH=ON \
 		-DCMAKE_USE_SYSTEM_LIBRARIES=True \
 		-DBUILD_TESTING=OFF \
+		-DCMAKE_MAKE_PROGRAM=$CMAKE_NAME \
 		$TERMUX_PKG_EXTRA_CONFIGURE_ARGS $TOOLCHAIN_ARGS
 }
 

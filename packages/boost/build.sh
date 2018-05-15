@@ -26,11 +26,6 @@ termux_step_make_install() {
 		BOOSTABI=sysv
 	fi
 
-	if [ "$TERMUX_ARCH" = x86_64 ] || [ "$TERMUX_ARCH" = aarch64 ]; then
-		BOOSTAM=64
-	elif [ "$TERMUX_ARCH" = i686 ] || [ "$TERMUX_ARCH" = arm ]; then
-		BOOSTAM=32
-	fi
 
 	./b2 target-os=android -j${TERMUX_MAKE_PROCESSES} \
 		include=/data/data/com.termux/files/usr/include \
@@ -43,7 +38,7 @@ termux_step_make_install() {
 		cxxflags="$CXXFLAGS" \
 		architecture="$BOOSTARCH" \
 		abi="$BOOSTABI" \
-		address-model="$BOOSTAM" \
+		address-model="$TERMUX_ARCH_BITS" \
 		binary-format=elf \
 		link=shared \
 		threading=multi \
