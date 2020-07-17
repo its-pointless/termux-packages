@@ -6,6 +6,24 @@ TERMUX_PKG_VERSION=1.45.0
 TERMUX_PKG_SRCURL=https://static.rust-lang.org/dist/rustc-$TERMUX_PKG_VERSION-src.tar.xz
 TERMUX_PKG_SHA256=c436034db42bc0ea7e7f32816ac6555b70d1f76c834407597966dfaf2ec839d6
 TERMUX_PKG_DEPENDS="libc++, clang, openssl, lld, zlib, libllvm"
+
+# x86_64 build fails with:
+# [...]
+#    Compiling mdbook-linkcheck v0.5.0
+#    Compiling rustbook v0.1.0 (/home/builder/.termux-build/rust/src/src/tools/rustbook)
+#     Finished release [optimized] target(s) in 2m 22s
+# Rustbook (x86_64-linux-android) - unstable-book
+# /home/builder/.termux-build/rust/build/build/x86_64-unknown-linux-gnu/stage0-tools-bin/rustbook: error while loading shared libraries: libc.so: ELF load command address/offset not properly aligned
+# 
+# 
+# command did not execute successfully: "/home/builder/.termux-build/rust/build/build/x86_64-unknown-linux-gnu/stage0-tools-bin/rustbook" "build" "/home/builder/.termux-build/rust/build/build/x86_64-linux-android/md-doc/unstable-book" "-d" "/home/builder/.termux-build/rust/build/build/x86_64-linux-android/doc/unstable-book"
+# expected success, got: exit code: 127
+# 
+# 
+# failed to run: /home/builder/.termux-build/rust/build/build/bootstrap/debug/bootstrap install --stage 2 --host x86_64-linux-android --target x86_64-linux-android --target wasm32-unknown-unknown
+# Build completed unsuccessfully in 0:19:47
+TERMUX_PKG_BLACKLISTED_ARCHES="x86_64"
+
 termux_step_configure() {
 	termux_setup_cmake
 	termux_setup_rust
@@ -43,7 +61,7 @@ termux_step_configure() {
 	export CFLAGS_x86_64_unknown_linux_gnu="-O2"
 	unset CC CXX CPP LD CFLAGS CXXFLAGS CPPFLAGS LDFLAGS PKG_CONFIG AR RANLIB
 	# we can't use -L$PREFIX/lib since it breaks things but we need to link against libLLVM-9.so
-	ln -sf $PREFIX/lib/libLLVM-9.0.1.so $TERMUX_STANDALONE_TOOLCHAIN/sysroot/usr/lib/$TERMUX_HOST_PLATFORM/$TERMUX_PKG_API_LEVEL/
+	ln -sf $PREFIX/lib/libLLVM-10.0.0.so $TERMUX_STANDALONE_TOOLCHAIN/sysroot/usr/lib/$TERMUX_HOST_PLATFORM/$TERMUX_PKG_API_LEVEL/
 
 	# rust checks libs in PREFIX/lib because both host and target are x86_64. It then can't find libc.so and libdl.so because rust program doesn't 
 	# know where those are. Putting them temporarly in $PREFIX/lib prevents that failure
@@ -59,9 +77,8 @@ termux_step_make() {
 	return 0;
 }
 termux_step_make_install() {
-	$TERMUX_PKG_SRCDIR/x.py dist librustc --host $CARGO_TARGET_NAME --target $CARGO_TARGET_NAME --target wasm32-unknown-unknown  
-	$TERMUX_PKG_SRCDIR/x.py dist rustc-dev --host $CARGO_TARGET_NAME --target $CARGO_TARGET_NAME --target wasm32-unknown-unknown
-	$TERMUX_PKG_SRCDIR/x.py install --stage 2 --host $CARGO_TARGET_NAME --target $CARGO_TARGET_NAME --target wasm32-unknown-unknown 
+	$TERMUX_PKG_SRCDIR/x.py install --stage 2 --host $CARGO_TARGET_NAME --target $CARGO_TARGET_NAME --target wasm32-unknown-unknown || bash 
+	$TERMUX_PKG_SRCDIR/x.py dist rustc-dev --host $CARGO_TARGET_NAME --target $CARGO_TARGET_NAME --target wasm32-unknown-unknown || bash
 	tar xvf build/dist/rustc-dev-$TERMUX_PKG_VERSION-$CARGO_TARGET_NAME.tar.gz
 	./rustc-dev-$TERMUX_PKG_VERSION-$CARGO_TARGET_NAME/install.sh --prefix=$TERMUX_PREFIX
 
@@ -81,7 +98,7 @@ termux_step_make_install() {
 		rust-installer-version \
 		manifest-* \
 		x86_64-unknown-linux-gnu
-	rm $TERMUX_STANDALONE_TOOLCHAIN/sysroot/usr/lib/$TERMUX_HOST_PLATFORM/$TERMUX_PKG_API_LEVEL/libLLVM-9.0.1.so 
+	rm $TERMUX_STANDALONE_TOOLCHAIN/sysroot/usr/lib/$TERMUX_HOST_PLATFORM/$TERMUX_PKG_API_LEVEL/libLLVM-10.0.0.so 
 
 }
 termux_step_post_massage() {
